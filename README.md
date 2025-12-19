@@ -97,7 +97,7 @@ Si no se pasa la constante de filtros, ``filter()`` no buscará en ningún campo
 ## ``getOrPaginate()``
 
 * Suponiendo que el input sea un json con esta estructura de datos:
-```json
+```js
 {
   "paginate": 10,
   "orderby": {
@@ -105,14 +105,34 @@ Si no se pasa la constante de filtros, ``filter()`` no buscará en ningún campo
     "name": "DESC"
   }
 }
+//Se paginaría por 10 y se ordenaría por el parámetro id en ascendente y por name en descendente
 ```
-Para la siguiente consulta se paginaría por 10 y se ordenaría por el parámetro id en ascendente y por nname en descendente una vez implementado el siguiente código:
+### En el controller
 ```php
   $users = User::getOrPaginate();
 ```
 ** Nota: tanto el scope ``filter()``, como el scope ``getOrPaginate()`` pueden implementarse en la mísma consulta.
 
 ## ``customGet()`` => Este scope es la fusión de ``filter()`` y ``getOrPaginate()``
+* Suponiendo que el input sea un json con esta estructura de datos:
+```js
+{
+ "search": "John",
+  "by": {
+      "departamento_id": [1,2,3,4,5]
+  },
+  "paginate": 10,
+  "orderby": {
+    "id": "ASC",
+    "name": "DESC"
+  }
+}
+/*
+  Se haría una búsqueda que traería a todas las personas en cuyo nombre tengan "Jhon" y se encuentren en los departamentos cuyo codigo sea "1,2,3,4 o 5"
+  además paginaría por 10 y se ordenaría por el parámetro id en ascendente y por name en descendente
+*/
+```
+### En el controller
 ```php
 $users = User::customGet(User::FILTER1);
 ```
