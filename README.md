@@ -40,7 +40,7 @@ Los scopes principales son: ``filter()``, ``getOrPaginate()`` y ``customGet()``.
 
       use HasTurboFilters;
   
-      const FILTER1 = ['name', 'email', 'profile.address.city:city_name,another_field1,another_field2'];
+      const FILTER1 = ['name', 'email', 'departamento_id, 'profile.address.city:city_name,another_field1,another_field2'];
   }
 ```
 * Notas importantes:
@@ -58,24 +58,29 @@ Los scopes principales son: ``filter()``, ``getOrPaginate()`` y ``customGet()``.
 * Antes de "filtrar" nesecitas saber que la estructura de datos de filtrado debe ser de la siguiente forma, de lo contrario no funcionará:
 
 1. Filtro por búsqueda simple:
-```json
+```js
 {
     "search": "John"
 }
+//Con este input se filtrará por todas las referencias de "Jhon" con *like*
 ```
-Con este input se filtrará por todas las referencias de "Jhon" con *like*
 
 2. Filtro por by:
-```json
+```js
 {
   "by": {
       "email": "john@example.com",
-      "city_name": "New York"
+      "city_name": "New York",
+      "departamento_id": [1,2,3,4,5]
   }
 }
+/*
+  Con este input se filtrará por "email" = "john@example.com", "city_name": "New York" y "departamento_id" sean "1,2,3,4 o 5"
+  usando la condición *where* para los valores simples y *whereIn* para los arreglos.
+*/
 ```
-Con este input se filtrará por todas las referencias de "Jhon" con *where*
-
+** Nota: tanto ``search`` como ``by`` pueden ir en el mismo payload de búsqueda
+### En el controller
 ```php
 $users = User::filter(User::FILTER1)->where('active', 1)->get();
 ```
@@ -91,7 +96,7 @@ Si no se pasa la constante de filtros, ``filter()`` no buscará en ningún campo
 
 ## ``getOrPaginate()``
 
-*Suponiendo que el input sea un json con esta estructura de datos:
+* Suponiendo que el input sea un json con esta estructura de datos:
 ```json
 {
   "paginate": 10,
