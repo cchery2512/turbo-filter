@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\TurboFilter\Core;
+namespace TurboFilter\Core;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Schema;

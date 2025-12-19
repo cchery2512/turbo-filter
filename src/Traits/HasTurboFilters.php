@@ -1,9 +1,9 @@
 <?php
 
-namespace Vendor\TurboFilter\Traits;
+namespace TurboFilter\Traits;
 
 use Illuminate\Support\Facades\Request;
-use Vendor\TurboFilter\Core\FilterEngine;
+use TurboFilter\Core\FilterEngine;
 
 trait HasTurboFilters{
     /**

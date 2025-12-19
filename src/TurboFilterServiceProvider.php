@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\TurboFilter;
+namespace TurboFilter;
 
 use Illuminate\Support\ServiceProvider;
 
